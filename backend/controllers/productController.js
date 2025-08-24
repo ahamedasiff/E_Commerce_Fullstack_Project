@@ -59,19 +59,16 @@ const listProduct = async (req, res) => {
         
         const products = await productModel.find({})
 
-        res.status(200).json({message: products})
+        res.status(200).json({products})
 
     } catch (error) {
         console.log(error);
         res.status(500).json(error.message)  
     }
-
 }
 
 // Function for remove Product
-
 const removeProduct = async (req, res) => {
-
     try {
         await productModel.findByIdAndDelete(req.body.id)
         res.status(200).json({message: 'product Removed'})
@@ -79,9 +76,7 @@ const removeProduct = async (req, res) => {
         console.log(error);
         res.status(500).json(error.message)
     }
-    
 }
-
 // Function for Single Product Info
 
 const singleProduct = async (req, res) => {

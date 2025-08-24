@@ -8,7 +8,14 @@ const Navbar = () => {
 
     const [visibelity, setVisibility] = useState(false);
 
-    const { setShowSearch, getCartCount } = useContext(ShopContxt)
+    const { setShowSearch, getCartCount, navigate, setToken, setCartItems, token } = useContext(ShopContxt)
+
+    const logout = () => {
+        navigate('/login')
+        localStorage.removeItem('token')
+        setToken('')
+        setCartItems({})
+    }
 
   return (
     <div className='flex justify-between items-center py-5 font-medium'>
@@ -34,7 +41,8 @@ const Navbar = () => {
         <div className='flex gap-6 items-center'>
             <img onClick={() => setShowSearch(true)} src={assets.search_icon} className='w-5 cursor-pointer' alt="" />
 
-            <div className='group relative'>
+            {/* before connecting backend */}
+            {/* <div className='group relative'>
                 <Link to={'/login'}>
                     <img src={assets.profile_icon} alt="" className='w-5 cursor-pointer'/>
                 </Link>
@@ -42,9 +50,21 @@ const Navbar = () => {
                     <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-700 rounded'>
                         <p className='cursor-pointer hover:text-black'>My Profile</p>
                         <p className='cursor-pointer hover:text-black'>Orders</p>
-                        <p className='cursor-pointer hover:text-black'>Logout</p>
+                        <p onClick={logout} className='cursor-pointer hover:text-black'>Logout</p>
                     </div>
                 </div>
+            </div> */}
+            <div className='group relative'>
+                <img onClick={() => token ? null : navigate('/login')} src={assets.profile_icon} alt="" className='w-5 cursor-pointer'/>
+                {/* DropDown Menu */}
+                {token && 
+                <div className='group-hover:block hidden absolute dropdown-menu right-0 p-4'>
+                    <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-700 rounded'>
+                        <p className='cursor-pointer hover:text-black'>My Profile</p>
+                        <p onClick={() => navigate('/orders')} className='cursor-pointer hover:text-black'>Orders</p>
+                        <p onClick={logout} className='cursor-pointer hover:text-black'>Logout</p>
+                    </div>
+                </div>}
             </div>
             <Link to='/cart' className='relative'>
                 <img src={assets.cart_icon} className='w-5 min-w-5' alt="" />
