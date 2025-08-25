@@ -12,21 +12,25 @@ const Cart = () => {
 
   useEffect(() => {
 
-    const tempData = []
-    for (const items in cartItems) {
-      for (const item in cartItems[items]) {
-        if (cartItems[items][item] > 0) {
-          tempData.push({
-            _id: items,
-            size: item,
-            quantity: cartItems[items][item],
-          })
-        }
+    if (products.length > 0) {
+      const tempData = []
+          for (const items in cartItems) {
+            for (const item in cartItems[items]) {
+              if (cartItems[items][item] > 0) {
+                tempData.push({
+                  _id: items,
+                  size: item,
+                  quantity: cartItems[items][item],
+                })
+              }
+            }
+          }
+          setCartData(tempData);
       }
-    }
-    setCartData(tempData);
+
     
-  },[cartItems])
+    
+  },[cartItems, products])
 
   return (
     <div className='border-t pt-10'>
@@ -39,6 +43,8 @@ const Cart = () => {
           cartData.map((item, index) => {
 
             const productData = products.find(product => product._id === item._id)
+
+            // if (!productData) return null;
 
             return (
               <div key={index} className='py-4 border-t border-b text-gray-700 grid grid-clos-[4fr_0.5fr_1fr] sm:grid-cols-[4fr_2fr_0.5fr] gap-4 items-center'>
